@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    height: 10%;
+    align-items: center;
+}
+
+.imagen {
+    width: 10%;
+}
+
+.links {
+    padding: 10px;
+    margin: 10px;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 10%;
+    color: #F7B2AD;
+}
+
+.titulo {
+    color: #EDB98C;
+}
+
+.carrito {
+    margin: 15px;
+    padding: 15px;
+}

@@ -1,41 +1,27 @@
 import React from "react"
 import logo from "../../assets/logo.png"
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import '../styles/Header.css';
 
 const Header = () => {
-    return ( <>
-        <header style = { styles.container } >
-            <img style = { styles.imagen } src = { logo } alt = "logo"/>
-                <h1> Tienda Montessori </h1>   
+    return ( < >
+        <header className="container">
+            <img className="imagen" src = { logo }alt = "logo" />
+            <h1 className="titulo"> Tienda Montessori </h1>    
                 <nav>
-                    <a style = { styles.links }href = "" > Inicio </a>  
-                    <a style = { styles.links }href = "" > Productos </a>    
-                    <a style = { styles.links }href = "" > Contacto </a> 
-                </nav> 
-                <ShoppingCartIcon />
-        </header>
+                        <a className="links" href = "" > Inicio </a>
+                        <a className="links" href = "" > Productos </a> 
+                        <a className="links" href = "" > Contacto </a> 
+                </nav>  
+                <div className="carrito">
+                    < ShoppingCartIcon sx={{ fontSize: 40 }}/>
+                </div>
 
+        </header>
         </>
     )
 };
 
-const styles = {
-    container: {
-        display: 'flex',
-        alingItems: 'center',
-        justifycontent: 'space-between'
 
-    },
-    imagen: {
-        width: '10%',
-    },
-
-    links: {
-        padding: '10',
-        margin: '10',
-    },
-
-
-}
 
 export default Header;
