@@ -1,8 +1,14 @@
 import './App.css';
-import Header from "./components/Header/Header.js"
+import NavBar from "./components/NavBar/NavBar.js"
+import ItemListContainer from "./components/ItemListContainer/PropGreeting.jsx"
 
 const App = () => {
-  return <Header />
+  return ( <>
+    <NavBar />
+    <ItemListContainer/>
+  </>
+  )
+
 };
 
 export default App;

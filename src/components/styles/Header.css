@@ -23,6 +23,12 @@
     color: #EDB98C;
 }
 
+.item {
+    color: #EDB98C;
+    font-size: 200%;
+    text-align: center;
+}
+
 .carrito {
     margin: 15px;
     padding: 15px;
