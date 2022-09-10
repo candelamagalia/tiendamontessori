@@ -1,10 +1,10 @@
 import React from 'react'
 import '../styles/Header.css';
 
-const ItemListContainer = () => {
+const ItemListContainer = ({greeting}) => {
     return  (       
         <>
-        <h1 className="item" >Bienvenidos a Tienda Montessori</h1>
+        <h1 className="item" >{greeting}</h1>
         </>
 
     )
