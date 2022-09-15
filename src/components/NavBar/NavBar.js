@@ -7,9 +7,10 @@ import { Nav } from './Nav/Nav';
 const NavBar = ({ nombre, id, children }) => {
 
     const categorias = [
-        { id: 0, nombre: 'Inicio' },
-        { id: 1, nombre: 'Productos' },
-        { id: 2, nombre: 'Contacto' },
+        { id: 0, nombre: 'Decoración' },
+        { id: 1, nombre: 'Juegos' },
+        { id: 2, nombre: 'Muebles' },
+        { id: 3, nombre: 'Accesorios' },
 
     ]
 
