@@ -29,7 +29,7 @@ const ItemListContainer = ({greeting}) => {
         <h1 className="item" >{greeting}</h1>
         <div className='item-list-container'>
         {loading ? <ClimbingBoxLoader color="#EEB98D" /> : <ItemList listProducts={listProducts}/>}
-        {/* <ItemCount initial={1} stock={5} onAdd={() => {}}/> */}
+        
         </div>
 
         

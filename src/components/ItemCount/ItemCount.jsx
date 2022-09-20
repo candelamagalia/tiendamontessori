@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 
 export const ItemCount = ({initial, stock, onAdd}) => {
 
@@ -17,7 +17,7 @@ export const ItemCount = ({initial, stock, onAdd}) => {
     }
 
     const reset = () => {
-        setContador (0);
+        setContador (1);
         onAdd (contador);
         if (contador>stock) {
             setContador(contador + 1)
