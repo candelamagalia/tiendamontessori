@@ -2,16 +2,19 @@ import React from 'react'
 import '../styles/Header.css'
 import { customFetch } from '../../utils/customFetch'
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useParams } from 'react'
 import ItemDetail from '../ItemDetail'
+import { products } from '../../assets/productos'
 
 
 
 
 const ItemDetailContainer= () => {
 
+    let {IdProducto} = useParams();
 
-    const [producto, setProducto] = useState({}) 
+
+    const [product, setProduct] = useState({}) 
     const [loading, setLoading] = useState(true)
 
 
@@ -19,9 +22,9 @@ const ItemDetailContainer= () => {
 
         const getItem = async () => {
             try {
-                const respuesta= await fetch('https://fakestoreapi.com/products/1')
+                const respuesta= await fetch(products)
                 const data = await respuesta.json();
-                setProducto(data);
+                setProduct(data);
 
             }
 
@@ -42,7 +45,7 @@ const ItemDetailContainer= () => {
         //     setLoading(false)
         //     setListProducts(res)
         //     })
-    }, [])
+    }, [IdProducto])
 
 
 
@@ -51,7 +54,7 @@ const ItemDetailContainer= () => {
         <div className='item-detail-container'>
 
             {
-                loading? <ClimbingBoxLoader color="#EEB98D" />:<ItemDetail producto={producto}/>
+                loading? <ClimbingBoxLoader color="#EEB98D" />:<ItemDetail product={product}/>
             }
             
         </div>
