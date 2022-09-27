@@ -1,20 +1,19 @@
 import '../styles/Header.css'
 import { Link, useParams } from 'react-router-dom'
-// import {ItemCount} from '../ItemCount/ItemCount'
 
-export function Item({data}) {
+
+export function Item({product}) {
 
 
     return (
         <>
-        <img className="itemImagen" src={`../../assets/${data.image}`} alt=""/>
-            <p>{data.product}</p>
-            <p>${data.price}</p>
-        <Link to={`producto/${data.id}`} className='item-container'>
+        <img className="itemImagen" src={product.image} alt=""/>            
+            <p className='item-precio'>${product.price}</p>
+            <p className='item-descripcion'>{product.description}</p>
+        <Link to={`producto/${product.id}`} className='item-container'>
          
             <button className='btnDetalle'>Ver detalle</button>
         </Link>
-        {/* <ItemCount initial={1} stock={5} onAdd={() => {}}/> */}
 
         </>
 
@@ -24,17 +23,3 @@ export function Item({data}) {
 }
 
 
-//  <>
-// <div className='item-container'>
-//     <p>{product.product}</p>
-//     <img className="itemImagen" src={product.image} />
-//     <p>${product.price}</p>
-
-//     <Link to="IdProducto"><button className='btnDetalle'>Ver detalle</button></Link>
-    
-//     {/* <ItemCount initial={1} stock={5} onAdd={() => {}}/> */}
-
-// </div>
-
-
-// </> 

@@ -5,113 +5,53 @@ import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader"
 import { useState, useEffect, } from 'react'
 import { useParams } from 'react-router-dom'
 import ItemDetail from '../ItemDetail';
-
-const ItemDetailContainer= () => {
-
-    const[data, setData] = useState({});
-    // const [loading, setLoading] = useState(true)
-    const {IdProducto} = useParams
-
-    // useEffect(()=>{
-    //     const getData = new Promise (resolve =>{
-    //         setTimeout(() => {
-    //             resolve(products);
-    //         },1000);
-    //     });
-    //     getData.then(res =>setData(res));
-    // },[]);
+import { customFetch } from '../../utils/customFetch'
 
 
 
-    useEffect(()=>{
-    const getData = new Promise(resolve=>{
-        setTimeout(()=>{
-            resolve(products);
+const ItemDetailContainter = () => {
 
-        },1000);
-    });
-    if(IdProducto){
-    getData.then(res=> 
-        setData(res[parseInt(IdProducto)]));
-    }else {
-        getData.then(res=> setData(res));
+    const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState (true);
+
+    const {IdProducto} = useParams();
+
+    useEffect (()=> {
+        const getItem = async () =>{ 
+            try{
+                setLoading(true)
+                const res = await customFetch(products)
+                if (IdProducto){
+                    setProduct(res[parseInt(IdProducto)]);
+                }else{
+                    setProduct(res);
+                }
+            }
+            catch(err){
+                console.error("No se encontraron productos.", err);
+            }
+            finally{
+                setLoading(false);
+            }
+        }
+        getItem();
+
+    },[IdProducto])
+
+    return (
+        <>
+        {loading ? 
+
+        <ClimbingBoxLoader color="#EEB98D"/> 
+        :
+        <ItemDetail item={product}/> 
+        }
+        </>
+        )
     }
-
-},[IdProducto])
-
-
-
-return (
-
-    <>
-<div className='item-detail-container'>  
-
-                <ItemDetail data={data}/>
-</div>
     
-</>
-
-);
-}
-
-
-export default ItemDetailContainer
+    export default ItemDetailContainter;
 
 
 
 
-
-// const ItemDetailContainer= () => {
-
-//     let {IdProducto} = useParams();
-
-
-//     const [product, setProduct] = useState({}) 
-//     const [loading, setLoading] = useState(true)
-
-
-//     useEffect (() => {
-
-//         const getItem = async () => {
-//             try {
-//                 const res= await customFetch(products)
-//                 setProduct(res[0]);
-
-//             }
-
-//             catch (error) {
-//                 console.log(error);}
-//             finally{
-//                 setLoading(false)
-//             }
-//         }
-
-//         getItem()
-        
-
-
-            
-//         // customFetch(products)
-//         // .then (res => {
-//         //     setLoading(false)
-//         //     setListProducts(res)
-//         //     })
-//     }, [IdProducto])
-
-
-
-//     return (
-//         <>
-//         <div className='item-detail-container'>
-
-//             {
-//                 loading? <ClimbingBoxLoader color="#EEB98D" />:<ItemDetail product={product}/>
-//             }
-            
-//         </div>
-
-        
-//         </>
-
-//     )
-// }

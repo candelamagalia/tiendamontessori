@@ -1,18 +1,15 @@
 import { Item } from '../Item'
 import '../styles/Header.css'
 
-const ItemList = ({ data = [] }) => {
-    return (data.map (product => <Item key={product.id} info={product} />)
+const ItemList = ({ item = [] }) => {
+
+
+
+    return (item.map (product => 
+    <div className='item-list'><Item key={product.id} product={product} /></div>)
     );
 } 
     
 
 
 export {ItemList}
-
-
-        // <>
-        // <div className='item-list-container'>
-            
-        // </div>
-        // </>

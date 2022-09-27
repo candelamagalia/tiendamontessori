@@ -3,8 +3,8 @@ import '../styles/Header.css'
 import {ItemList} from '../ItemList'
 import { useState, useEffect } from 'react'
 import {products} from '../../assets/productos'
-import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 import { useParams } from 'react-router-dom'
+
 
 
 
@@ -13,25 +13,22 @@ const ItemListContainer = ({greeting}) => {
 
     const {IdCategoria} = useParams();
 
+    const [product, setProduct] = useState([]);
 
-
-
-    const [data, setData] = useState([])
-    // const [loading, setLoading] = useState(true)
-    // const [error, setError] = useState(false)
 
     useEffect (() => {
-        const getData = new Promise(resolve=>{
+
+        const getProduct = new Promise(resolve=>{
             setTimeout(() =>{
                 resolve(products);
-            },1000);
+            },0);
         });
         if(IdCategoria){
-            getData.then(res=> 
-                setData(res.filter(product=>product.category === IdCategoria)));
+            getProduct.then(res=> 
+                setProduct(res.filter(product=>product.category === IdCategoria)));
 
         }else {
-            getData.then(res=> setData(res));
+            getProduct.then(res=> setProduct(res));
         }
         
 
@@ -43,8 +40,7 @@ const ItemListContainer = ({greeting}) => {
         <>
         <h1 className="item" >{greeting}</h1>
         <div className='item-list-container'>
-        <ItemList data={data}/>
-        
+ <ItemList item={product}/>
         </div>
 
         

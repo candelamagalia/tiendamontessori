@@ -1,5 +1,5 @@
 export const products = [{
-        id: 1,
+        id: 0,
         image: 'https://i.ibb.co/7bDkpWQ/arcoiris.jpg',
         product: 'Arcoíris',
         category: 'Muebles',
@@ -8,17 +8,17 @@ export const products = [{
         stock: 3
     },
     {
-        id: 2,
+        id: 1,
         image: 'https://i.ibb.co/pyx31B5/cuadrito.jpg',
         product: 'Cuadrito',
         category: 'Deco',
-        description: 'cuadrito de princesa con globos',
+        description: 'Cuadrito de princesa con globos',
         price: 3000,
         stock: 2,
 
     },
     {
-        id: 3,
+        id: 2,
         image: 'https://i.ibb.co/rvwXXrX/gimnasio.jpg',
         product: 'Gimnasio para bebés',
         category: 'Juegos',
@@ -27,7 +27,7 @@ export const products = [{
         stock: 2
     },
     {
-        id: 4,
+        id: 3,
         image: 'https://i.ibb.co/6Hwn0N0/sonajero.jpg',
         product: 'Sonajero de zorrito',
         category: 'Accesorios',
