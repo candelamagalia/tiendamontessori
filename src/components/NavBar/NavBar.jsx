@@ -3,9 +3,9 @@ import logo from "../../assets/logo.png"
 import { CartWidget} from "../CartWidget/CartWidget"
 import '../styles/Header.css'
 import { Nav } from './Nav/Nav';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const NavBar = ({ nombre, id, children }) => {
+const NavBar = () => {
 
     const categorias = [
         { id: 0, nombre: 'Deco', ruta:'/categoria/Deco' },
@@ -16,13 +16,13 @@ const NavBar = ({ nombre, id, children }) => {
 
     return ( < >
         <header className = "container" >
-            <Link to="/">
+            <NavLink to="/">
                 <img className = "imagen" src = { logo } alt = "logo" />
-            </Link>
+            </NavLink>
         
         <h1 className = "titulo" > Montessori Deco</h1>     
         <Nav categorias = { categorias }/> 
-        <Link to="cart"><CartWidget/></Link>
+        <NavLink to="cart"><CartWidget/></NavLink>
          
 
 

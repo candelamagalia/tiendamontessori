@@ -2,8 +2,7 @@ import React from 'react'
 import '../styles/Header.css'
 import {ItemList} from '../ItemList'
 import { useState, useEffect } from 'react'
-import {products, getProducts} from '../../assets/productos'
-import { customFetch } from '../../utils/customFetch'
+import {products} from '../../assets/productos'
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 import { useParams } from 'react-router-dom'
 
@@ -12,58 +11,31 @@ import { useParams } from 'react-router-dom'
 
 const ItemListContainer = ({greeting}) => {
 
-    let {IdCategoria} = useParams();
-    console.log(IdCategoria);
+    const {IdCategoria} = useParams();
 
-    const [listProducts, setListProducts] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false)
 
-    const URL_BASE = (products)
-    const URL_CATEGORY = (getProducts)
+
+
+    const [data, setData] = useState([])
+    // const [loading, setLoading] = useState(true)
+    // const [error, setError] = useState(false)
 
     useEffect (() => {
-        customFetch(products)
-        .then ((response) => response.json())
-        .then((data) => {
-            setListProducts(data)
-        })
-        .catch((error) =>{
-            setError(true)
-            console.log("error");
-            console.error(error)
-        })
-        .finally(() => {
-            setLoading(false)
-        })
-    }, [])
+        const getData = new Promise(resolve=>{
+            setTimeout(() =>{
+                resolve(products);
+            },1000);
+        });
+        if(IdCategoria){
+            getData.then(res=> 
+                setData(res.filter(product=>product.category === IdCategoria)));
 
+        }else {
+            getData.then(res=> setData(res));
+        }
+        
 
-
-
-    // useEffect (() => {
-    //     fetch(products)
-    //     .then (res => {
-    //         setLoading(false)
-    //         setListProducts(res)
-    //         })
-    // }, [IdCategoria])
-
-    // useEffect (() => {
-    //     fetch(IdCategoria === undefined ? URL_BASE : `${URL_CATEGORY}${IdCategoria}`)
-    //     .then ((response) => response.json())
-    //     .then((data) => {
-    //         setListProducts(data)
-    //     })
-    //     .catch((error) =>{
-    //         setError(true)
-    //         console.log("error");
-    //         console.error(error)
-    //     })
-    //     .finally(() => {
-    //         setLoading(false)
-    //     })
-    // }, [])
+    }, [IdCategoria])
 
 
 
@@ -71,7 +43,7 @@ const ItemListContainer = ({greeting}) => {
         <>
         <h1 className="item" >{greeting}</h1>
         <div className='item-list-container'>
-        {loading ? <ClimbingBoxLoader color="#EEB98D" /> : <ItemList listProducts={listProducts}/>}
+        <ItemList data={data}/>
         
         </div>
 
