@@ -1,8 +1,11 @@
 import '../styles/Header.css'
 import { Link, useParams } from 'react-router-dom'
+import React, {useContext} from 'react';
 
 
 export function Item({product}) {
+
+
 
 
     return (
