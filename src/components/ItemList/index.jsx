@@ -6,10 +6,12 @@ const ItemList = ({ item = [] }) => {
 
 
     return (item.map (product => 
-    <div className='item-list'><Item key={product.id} product={product} /></div>)
+    <div ><Item className='item-list'key={product.id} product={product} /></div>)
     );
 } 
     
 
 
 export {ItemList}
+
+

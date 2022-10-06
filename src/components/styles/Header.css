@@ -15,7 +15,11 @@
 }
 
 .carrito {
-    color: #bfa1ab
+    display: flex;
+    flex-direction: row;
+    color: #bfa1ab;
+    align-items: center;
+    margin: 2%;
 }
 
 .links {
@@ -133,10 +137,10 @@
     border: none;
     margin: 5%;
     border-radius: 7px;
-    background-color: #eed3dc;
-    color: #747474;
+    background-color: #747474;
+    color: #FFFFFF;
     transition: background-color .5s;
-    font-size: 50%;
+    font-size: 100%;
 }
 
 .btnDetalle:hover {
@@ -147,9 +151,8 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: center;
-    background-color: #FFFFFF;
-    border-radius: 50px;
+    justify-content: space-around;
+    background-color: #acacab;
     color: #FFFFFF;
     height: 415px;
     align-content: space-evenly;
@@ -224,4 +227,24 @@
 
 .item-precio {
     color: #FFFFFF;
+}
+
+.carrito-cantidad {
+    text-decoration: none;
+}
+
+.cartview-card {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: center;
+}
+
+.finalizar-compra {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: center;
 }

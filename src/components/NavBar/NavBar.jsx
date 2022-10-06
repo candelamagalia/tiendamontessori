@@ -20,7 +20,7 @@ const NavBar = () => {
                 <img className = "imagen" src = { logo } alt = "logo" />
             </NavLink>
         
-        <h1 className = "titulo" > Montessori Deco</h1>     
+        {/* <h1 className = "titulo" > Montessori Deco</h1>      */}
         <Nav categorias = { categorias }/> 
         <NavLink to="cart"><CartWidget/></NavLink>
          
