@@ -6,6 +6,8 @@ import { useState, useEffect, } from 'react'
 import { useParams } from 'react-router-dom'
 import ItemDetail from '../ItemDetail';
 import { customFetch } from '../../utils/customFetch'
+import {db} from "../../firebase/firebase"
+import { doc, getDoc, collection } from "firebase/firestore"
 
 
 
@@ -13,30 +15,32 @@ const ItemDetailContainter = () => {
 
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState (true);
+    const [error, setError] = useState(false);
 
     const {IdProducto} = useParams();
 
     useEffect (()=> {
-        const getItem = async () =>{ 
-            try{
-                setLoading(true)
-                const res = await customFetch(products)
-                if (IdProducto){
-                    setProduct(res[parseInt(IdProducto)]);
-                }else{
-                    setProduct(res);
+        const productCollection = collection(db, 'products');
+        const refDoc = doc(productCollection, IdProducto);
+        getDoc(refDoc)
+        .then((result)=>{
+            setProduct(
+                {
+                    id:result,
+                    ...result.data()
                 }
-            }
-            catch(err){
-                console.error("No se encontraron productos.", err);
-            }
-            finally{
-                setLoading(false);
-            }
-        }
-        getItem();
-
+            )
+        })
+        .catch(()=>{
+            setError(true);
+        })
+        .finally(()=>{
+            setLoading(false)
+        })
+        
     },[IdProducto])
+
+
 
     return (
         <>
