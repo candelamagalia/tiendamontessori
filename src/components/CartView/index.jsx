@@ -1,17 +1,63 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { CartContext, useCartContext } from '../../context/CartContext'
 import { Link } from 'react-router-dom'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { db } from '../../firebase/firebase';
+import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore';
 
 export const Cart = () => {
 
-    const {cart, totalPrice, removeProduct, cleanCart} = useCartContext();
+    const {cart, totalPrice, removeProduct, clearCart} = useCartContext();
+    const [IdCompra, setIdCompra] = useState("");
+
+
+
+    const [user, setUser] = useState({
+      nombre: "",
+      apellido: "",
+      email: ""
+    })
+
+    const buyer = (e) => {
+      const {target} = e;
+      const {name, value} = target;
+      const newValues = {
+        ...user,
+        [name]: value,
+    }; 
+    setUser(newValues)
+    }
+
+    const finalizarCompra = () => {
+      const ventasCollection = collection(db,"ventas")
+      addDoc(ventasCollection, {
+        buyer: user,
+        items: cart,
+        date: serverTimestamp(),
+        total: totalPrice
+      })
+      .then((result) => {
+        setIdCompra(result.id)
+        cart.forEach(product => {
+          actualizarStock(product)
+        });
+      })
+
+    }
+
+    const actualizarStock = (product) => {
+      const updateStock = doc(db, "products", product.id)
+      updateDoc(updateStock, {stock: (product.stock - product.quantity)})
+    }
+
+    const terminar = () => {
+      finalizarCompra()
+  }
 
 
 
@@ -55,7 +101,19 @@ export const Cart = () => {
         <h1>Tu carrito está vacio, puedes empezar tu compra desde <Link to="/">aquí</Link></h1>:
         <div className='finalizar-compra'>
         <h2>Total: ${totalPrice()}</h2>
-        <button onClick={cleanCart} className="btnDetalle">Eliminar todo</button>
+        <button onClick={clearCart} className="btnDetalle">Eliminar todo</button>
+        <h3>Datos del comprador</h3>
+        <h5>Id de compra: {IdCompra}</h5>
+        <form>
+          <div>
+            <div>
+              <input type="text" name='nombre' placeholder='ingresar nombre' onChange={buyer} value={user.nombre}/>
+              <input type="text" name='apellido' placeholder='ingresar apellido' onChange={buyer} value={user.apellido}/>
+              <input type="text" name='email' placeholder='ingresar email' onChange={buyer} value={user.email}/>
+        <button className="btnDetalle" onClick={terminar}>Finalizar Compra</button>
+            </div>
+          </div>
+        </form>
 
         </div>
 
@@ -64,32 +122,3 @@ export const Cart = () => {
 
         </>
     )};
-
-    // {cart.map(product =>
-        
-    //     <div>     
-            
-    //         <p className='titulo-item'>{product.product}</p>        
-    //         <div key={product.id} >
-    //             <div className='item-detail1'>
-    //             <img className='item-detail-img'src={product.image} alt="" />
-    //             </div>
-    //             <p className='item-detail-price'>${product.price}</p> 
-    //             <button className='btnDetalle' onClick={()=>removeProduct(product.id)}>Eliminar</button>
-    //         </div>
-            
-        
-
-    //     </div>
-       
-        
-    //     )
-    //     }
-    //     {cart.length === 0 ?
-    //     <h1>Tu carrito está vacio</h1>:
-    //     <><h2>Total: ${totalPrice()}</h2>
-    //     <button onClick={cleanCart}>Eliminar todo</button></>
-    //     }
-        
-
-    //     </>

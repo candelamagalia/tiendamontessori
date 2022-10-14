@@ -8,12 +8,16 @@ export const useCartContext = () => useContext(CartContext)
 export const CartProvider = ({ children }) => {
 
     const [cart, setCart] = useState([]);
+    const [buyerData, setBuyerData] = useState({
+        nombre: "",
+        apellido:"",
+        email:""
+    });
+
+
 
 
     const IsInCart = (id) =>cart.some((product)=>product.id === id);
-
-
-
 
     const addProduct = (item, quantity) => {
         if(IsInCart(item.id)) {
@@ -34,14 +38,13 @@ export const CartProvider = ({ children }) => {
 
 
 const removeProduct = (id) => {
-    setCart(
-        cart.filter((product)=>{
-            return product.id !== id;
-        })
-    )
+    const arrayBorrado = cart.filter((item) => {
+        return item.id != id
+    })
+    setCart(arrayBorrado)
 }
 
-const clearCart= () => setCart([]);
+const clearCart = () => setCart([]);
 
 const totalPrice = () => {
     return cart.reduce((acc, product) => acc += (product.price * product.quantity), 0)
