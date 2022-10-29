@@ -1,43 +1,61 @@
 import React, {useState, useContext} from 'react'
 import ItemCount from '../ItemCount/ItemCount'
-import '../styles/Header.css'
+// import '../styles/Header.css'
 import { Link } from 'react-router-dom'
-import { CartContext, useCartContext } from '../../context/CartContext'
+import { useCartContext } from '../../context/CartContext'
+import '../../index.css'
 
 const ItemDetail = ({ item }) => {
 
+    const { image, product, price, stock, description, initial } = item;
+
     const [goToCart, setGoToCart] = useState(false);
-    // const {addProduct} = useCartContext();
-    const {addProduct, cart} = useCartContext()
+    
+    const {addProduct, carrito} = useCartContext()
 
 
-    const onAdd = (contador, quantity) => {
+    const onAdd = (quantity) => {
         setGoToCart(true);
-        addProduct(item, contador);
+        addProduct(item, quantity);
     }
 
-    console.log(cart)
+    console.log(carrito)
 
 
 
     return (
         <>
         {item ? 
-        <div>
-        <p className='titulo-item'>{item.product}</p>        
-        <div key={item.id} className='item-detail'>
-            <div className='item-detail1'>
-            <img className='item-detail-img'src={item.image} alt="" />
-            </div>
-        <div className='item-detail2'>
-            <span className='item-detail-description'>{item.description}</span>
-            <p className='item-detail-price'>${item.price}</p>  
-            {
-                goToCart? <Link to='/cart'><button className='btnDetalle'>Terminar compra</button></Link>:
-                <ItemCount initial={1} stock={item.stock} onAdd={onAdd}/>            }
-           
-           <Link to='/'><button className='btnDetalle'>Volver al inicio</button></Link>
+        <div className='item-list-container'>
+            <div className='greeting'>
+                <h1>{item.product}</h1> 
+               </div>
+        <div key={item.id} className='producto'>
             
+            <div className='producto__img'>
+            <img src={item.image} alt="" />
+            
+            </div>
+        <div className='producto'>
+            <p>{item.description}</p>
+            <h5 className='item-detail-price'>${item.price}</h5>  
+            {
+                goToCart? 
+                <div className='producto__footer'>
+                    <Link to='/cart'>
+                    <button className='btn'>Terminar compra</button>
+                    </Link>
+                </div>
+                
+                    :
+
+                <ItemCount initial={1} stock={item.stock} onAdd={onAdd}/>            }
+                <div className='producto__footer'>
+                    <Link to='/'><button className='btn'>Volver al inicio</button></Link>
+                </div>
+           
+           
+                
         </div>
         </div> 
         </div>

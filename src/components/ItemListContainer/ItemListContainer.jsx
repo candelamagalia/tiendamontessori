@@ -1,11 +1,13 @@
 import React from 'react'
-import '../styles/Header.css'
+// import '../styles/Header.css'
 import {ItemList} from '../ItemList'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import {db} from "../../firebase/firebase"
 import {getDocs, collection, query, where} from "firebase/firestore"
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader"
+import '../../index.css'
+import arcoiris2 from '../../assets/arcoiris2.jpeg'
 
 
 
@@ -46,13 +48,33 @@ const ItemListContainer = ({greeting}) => {
 
     return  (       
         <>
-        <h1 className="item" >{greeting}</h1>
+        
         <div className='item-list-container'>
+            <div className='greeting'>
+                        <h1>{greeting}</h1>
+        <img src={arcoiris2} alt="Tienda Montessori" />
+            </div>
 
-
-            {loading ? 
-            <ClimbingBoxLoader color="#EEB98D"/> : 
-            <ItemList item={product}/>
+            {loading ? (
+                <div 
+                style={{
+                    width:"100%",
+                    height:"100hv",
+                    display:"flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}>
+                    <ClimbingBoxLoader color="#EEB98D"/> 
+                </div>
+            ): error ? (
+                <h1>Ocurrió un error</h1>
+            )
+             : (
+                <div className='item-list-container'>
+                    <ItemList item={product}/>
+                </div>
+            
+            )
             }
 
         </div>

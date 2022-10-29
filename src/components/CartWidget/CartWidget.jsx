@@ -1,8 +1,9 @@
 import React, {useContext} from 'react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import '../styles/Header.css';
+// import '../styles/Header.css';
+import '../../index.css';
 import { NavLink } from 'react-router-dom';
-import { CartContext, useCartContext } from '../../context/CartContext';
+import { useCartContext } from '../../context/CartContext';
 
 
 
@@ -11,12 +12,17 @@ export const CartWidget = () => {
   const {totalQuantity} = useCartContext()
   
     return  (
-      <NavLink to="/cart" className = "carrito">
+      <>
+      <div className='carrito'>
         <ShoppingCartIcon sx = {{ fontSize: 40 } }/> 
-        <h3 className='carrito-cantidad'>{totalQuantity()}</h3>
+      <span className='carrito-cantidad'>{totalQuantity()}</span>
+        </div>        
+        </>
 
 
-      </NavLink>       
+
+
+ 
     )
   };
   

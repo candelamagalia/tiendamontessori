@@ -1,57 +1,51 @@
-import React, {useState, useContext, createContext, useEffect} from "react";
+import React, {useState, useContext, createContext } from "react";
 
 
 export const CartContext = createContext([]);
 export const useCartContext = () => useContext(CartContext)
-
+ 
 
 export const CartProvider = ({ children }) => {
 
-    const [cart, setCart] = useState([]);
-    const [buyerData, setBuyerData] = useState({
-        nombre: "",
-        apellido:"",
-        email:""
-    });
+    const [carrito, setCarrito] = useState([]);
 
+    const IsInCart = (id) =>carrito.find((prod)=>prod.id.id === id);
 
+ 
 
-
-    const IsInCart = (id) =>cart.some((product)=>product.id === id);
-
-    const addProduct = (item, quantity) => {
-        if(IsInCart(item.id)) {
-            const newCart = cart.map(product => {
-                if(product.id === item.id) {
-                    const newQuantity = product.quantity + quantity
-                    return {...product, quantity: newQuantity}
-                }else{
-                    return product
-                }
-            })
-            setCart(newCart)
-    }else {
+const addProduct = (item, quantity) => {
+    if (IsInCart(item.id.id)) {
+        const newCarrito = carrito.map(prod =>{
+            if(prod.id.id === item.id.id){
+              const newQuantity = prod.quantity + quantity
+              return {...prod, quantity: newQuantity}  
+            } else {
+                return prod
+            }            
+        })
+        setCarrito(newCarrito)
+    } else {
         const newProduct = {...item, quantity: quantity}
-        setCart([...cart, newProduct])
+        setCarrito([...carrito, newProduct])
     }
+
 }
+
 
 
 const removeProduct = (id) => {
-    const arrayBorrado = cart.filter((item) => {
-        return item.id != id
-    })
-    setCart(arrayBorrado)
+    setCarrito(carrito.filter(prod => prod.id.id !== id))
 }
 
-const clearCart = () => setCart([]);
+
+const clearCart = () => setCarrito([]);
 
 const totalPrice = () => {
-    return cart.reduce((acc, product) => acc += (product.price * product.quantity), 0)
+    return carrito.reduce((acc, product) => acc += (product.price * product.quantity), 0)
 }
 
 const totalQuantity = () => {
-    return cart.reduce((acc, product) => acc += product.quantity, 0)
+    return carrito.reduce((acc, product) => acc += product.quantity, 0)
 }
 
 
@@ -59,7 +53,7 @@ const totalQuantity = () => {
 
     return (
         <>
-        <CartContext.Provider value = {{cart, clearCart, IsInCart, removeProduct, addProduct, totalPrice, totalQuantity}}
+        <CartContext.Provider value = {{carrito, clearCart, removeProduct, addProduct, totalPrice, totalQuantity}}
         >
             {children}
 

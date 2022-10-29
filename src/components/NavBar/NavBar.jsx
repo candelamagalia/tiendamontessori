@@ -1,9 +1,10 @@
 import React from "react"
 import logo from "../../assets/logo.png"
 import { CartWidget} from "../CartWidget/CartWidget"
-import '../styles/Header.css'
+// import '../styles/Header.css'
 import { Nav } from './Nav/Nav';
 import { NavLink } from "react-router-dom";
+import '../../index.css'
 
 const NavBar = () => {
 
@@ -15,13 +16,12 @@ const NavBar = () => {
     ]
 
     return ( < >
-        <header className = "container" >
+        <header className = "header" >
             <NavLink to="/">
-                <img className = "imagen" src = { logo } alt = "logo" />
+                <img className = "logo" src = { logo } alt = "logo" width="200" />
             </NavLink>
         
-        {/* <h1 className = "titulo" > Montessori Deco</h1>      */}
-        <Nav categorias = { categorias }/> 
+        <Nav className='nav-bar' categorias = { categorias }/> 
         <NavLink to="cart"><CartWidget/></NavLink>
          
 
