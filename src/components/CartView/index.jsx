@@ -20,7 +20,7 @@ const Cart = () => {
             <p>{product.product}</p>
             <p>{product.quantity}</p>
             <img src={product.image} alt="" />
-            <button className='btn' onClick={()=>removeProduct(product.id.id)}>Eliminar</button>
+            <button className='btn' onClick={()=>removeProduct(product.id.id)}>X</button>
           </div>
 
         </React.Fragment>
@@ -31,12 +31,8 @@ const Cart = () => {
         <div className='item-list-container'>
 
           <h1 className='greeting'>Tu carrito está vacio, puedes empezar tu compra desde <Link to="/">aquí</Link></h1>
-
         </div>
-
-
         :
-
         <div className='item-list-container'>
 
           <h2>Total: ${totalPrice()}</h2>
@@ -45,9 +41,6 @@ const Cart = () => {
           <Link to='/formulario'>
           <button className="btn">Finalizar Compra</button>
           </Link>
-            
-
-
         </div>
 
         }

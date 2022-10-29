@@ -1,7 +1,7 @@
 import React from "react";
 import { useCartContext } from "../../context/CartContext";
 import { db } from '../../firebase/firebase';
-import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useState } from "react";
 // import '../../index.css'
 
@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export const Form = () => {
 
-    const {carrito, totalPrice, removeProduct, clearCart} = useCartContext();
+    const {carrito, totalPrice} = useCartContext();
     const [ saleId, setSaleId ] = useState()
 
     const [ dataClient, setDataClient ] = useState({
@@ -23,8 +23,11 @@ export const Form = () => {
 
 
     const finalizarCompra = () => {
-        const ventasCollection = collection(db, 'ventas');
-        addDoc(ventasCollection, {
+        const ventasCollection = collection (db, 'ventas');
+        if (dataClient.length === 0){
+            console.log("faltan ingresar datos");
+        } else{
+        addDoc (ventasCollection, {
             dataClient,
             items: carrito.map(product=>({price: product.price, title: product.product, quantity: product.quantity, id: product.id.id})),
             date: serverTimestamp(),
@@ -35,6 +38,7 @@ export const Form = () => {
             console.log(res.id)        
         })        
     }
+}
 
     const clientChange = (e) => {
         const { name, value } = e.target
@@ -44,47 +48,6 @@ export const Form = () => {
     }
     
 
-// const [dataClient, setDataClient] = useState({
-//     nombre:'',
-//     apellido: '',
-//     email: '',
-//     telefono: ''
-// })
-
-// const [saleId, setSaleId] = useState();
-
-    // const finalizarCompra = () =>{
-    //   const ventasCollection = collection(db, "ventas");
-    //   addDoc(ventasCollection, {
-    //     dataClient,
-    //     items: carrito.map(product=>({price: product.price, title: product.product, quantity: product.quantity, id: product.id.id})),
-    //     date: serverTimestamp(),
-    //     total: totalPrice(),
-    //   })
-    //   .then(result=>{
-    //       setSaleId(result.id);
-    //       console.log(result.id);
-    //         carrito.forEach(products => {
-    //             updateStock(products);
-    //         });
-    //     clearCart();
-
-    //   })       
-    // }
-
-
-    // const clientChange = (e) => {
-    //     const {name, value} = e.target
-    //     setDataClient ({
-    //         ...dataClient, [name] : value
-    //     })
-        
-    // }
-
-    // const updateStock = (products) => {
-    //     const updStk = doc(db, "products", products.id.id)
-    //     updateDoc(updStk, {stock:(products.stock - products.quantity)})
-    // }
 
 
     return (
@@ -103,14 +66,16 @@ export const Form = () => {
 
         <div>
            
-            <form onSubmit={finalizarCompra} onChange={clientChange}>
+            <form onSubmit={finalizarCompra} onChange={clientChange} id="form-1">
                 <input type="text" placeholder="Nombre" name="nombre" onChange={clientChange} required={true}/>
                 <input type="text" placeholder="Apellido" name="apellido" onChange={clientChange} required={true}/>
                 <input type="email" placeholder="Email" name="email" onChange={clientChange} required={true}/>
                 <input type="number" placeholder="Teléfono" name="telefono" onChange={clientChange} required={true}/>
-                <button type="submit" onClick={finalizarCompra}>Finalizar compra</button>
-            </form>            
-            <p>Tu ID de compra es {saleId}</p>
+ 
+
+            </form>    
+        <button onClick={finalizarCompra}>Finalizar compra</button>
+        <p>Tu ID de compra es {saleId}</p>
             
         </div>
         </div>

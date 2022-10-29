@@ -31,11 +31,9 @@ const addProduct = (item, quantity) => {
 
 }
 
-
-
-const removeProduct = (id) => {
+const removeProduct = (id) => 
     setCarrito(carrito.filter(prod => prod.id.id !== id))
-}
+
 
 
 const clearCart = () => setCarrito([]);
