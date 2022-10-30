@@ -3,7 +3,10 @@ import { useCartContext } from "../../context/CartContext";
 import { db } from '../../firebase/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useState } from "react";
-// import '../../index.css'
+import Swal from 'sweetalert2'
+import '../../index.css'
+
+
 
 
 
@@ -11,7 +14,7 @@ import { useState } from "react";
 
 export const Form = () => {
 
-    const {carrito, totalPrice} = useCartContext();
+    const {carrito, totalPrice, clearCart} = useCartContext();
     const [ saleId, setSaleId ] = useState()
 
     const [ dataClient, setDataClient ] = useState({
@@ -24,26 +27,38 @@ export const Form = () => {
 
     const finalizarCompra = () => {
         const ventasCollection = collection (db, 'ventas');
-        if (dataClient.length === 0){
-            console.log("faltan ingresar datos");
-        } else{
-        addDoc (ventasCollection, {
-            dataClient,
-            items: carrito.map(product=>({price: product.price, title: product.product, quantity: product.quantity, id: product.id.id})),
-            date: serverTimestamp(),
-            total: `${totalPrice()}`
-        })
-        .then((res) => {
-            setSaleId(res.id)
-            console.log(res.id)        
-        })        
+        if (dataClient.nombre && dataClient.apellido && dataClient.email && dataClient.telefono){
+            addDoc (ventasCollection, {
+                dataClient,
+                items: carrito.map(product=>({price: product.price, title: product.product, quantity: product.quantity, id: product.id.id})),
+                date: serverTimestamp(),
+                total: `${totalPrice()}`
+            })
+            .then((res) => {
+                setSaleId(res.id)
+                console.log(res.id)        
+            });
+            Swal.fire(
+                'Datos ingresados correctamente',
+                'No te olvides de anotar tu ID de compra',
+                'success'
+              );
+            }else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oh no',
+                    text: 'Faltan ingresar datos',
+                  });
+        }
     }
-}
 
     const clientChange = (e) => {
-        const { name, value } = e.target
+        const inpt = {
+            name: e.target.name,
+            value: e.target.value
+        }
         setDataClient({
-            ...dataClient, [name] : value
+            ...dataClient, [inpt.name] : inpt.value
         })
     }
     
@@ -55,18 +70,21 @@ export const Form = () => {
         <>
 
         <div className="item-list-container">
+                <h1 className="greeting">Completa tus datos para finalizar la compra</h1>
+            <div>
                     {carrito.map((product) => 
         <div key={product.id.id} name="items">
-                    <h1 className="greeting">Completa tus datos para finalizar la compra</h1>
                     <p>{product.product}</p>
                     <p>{product.quantity}</p>
                     <p>${totalPrice()}</p>
         </div>
                     )}
 
-        <div>
+                    <div className="div__form">
+
+
            
-            <form onSubmit={finalizarCompra} onChange={clientChange} id="form-1">
+            <form className="form" onSubmit={finalizarCompra} onChange={clientChange}>
                 <input type="text" placeholder="Nombre" name="nombre" onChange={clientChange} required={true}/>
                 <input type="text" placeholder="Apellido" name="apellido" onChange={clientChange} required={true}/>
                 <input type="email" placeholder="Email" name="email" onChange={clientChange} required={true}/>
@@ -74,8 +92,16 @@ export const Form = () => {
  
 
             </form>    
-        <button onClick={finalizarCompra}>Finalizar compra</button>
-        <p>Tu ID de compra es {saleId}</p>
+         <button onClick={finalizarCompra} className="btn">Finalizar compra</button> 
+                    </div>
+            
+
+         <div className="gracias">
+            <h3>Gracias por tu compra!</h3>
+            <p>Acá debajo podes ver tu ID de compra. Guardalo para coordinar la entrega!</p>
+            <p>Tu ID de compra es <b>{saleId}</b> </p>
+         </div>
+
             
         </div>
         </div>

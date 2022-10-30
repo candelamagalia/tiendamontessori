@@ -52,7 +52,7 @@ const ItemListContainer = ({greeting}) => {
         <div className='item-list-container'>
             <div className='greeting'>
                         <h1>{greeting}</h1>
-        <img src={arcoiris2} alt="Tienda Montessori" />
+            <img src={arcoiris2} alt="Tienda Montessori" />
             </div>
 
             {loading ? (
@@ -70,7 +70,7 @@ const ItemListContainer = ({greeting}) => {
                 <h1>Ocurrió un error</h1>
             )
              : (
-                <div className='item-list-container'>
+                <div className='item-list-container-2'>
                     <ItemList item={product}/>
                 </div>
             

@@ -1,9 +1,6 @@
-// import '../styles/Header.css'
 import { Link } from 'react-router-dom'
 import React from 'react';
 import '../../index.css'
-
-
 
 
 export function Item({product}) {

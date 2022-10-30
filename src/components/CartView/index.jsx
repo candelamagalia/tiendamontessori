@@ -10,17 +10,29 @@ const Cart = () => {
 
     return(
         <>
-        {carrito.map((product) =>
-        
-        <React.Fragment key={product.id.id}>
-
           <div className='item-list-container'>
 
             <h1 className='greeting'>Tu carrito</h1>
-            <p>{product.product}</p>
-            <p>{product.quantity}</p>
+          </div>
+        {carrito.map((product) =>
+        <React.Fragment key={product.id.id}>
+        
+
+          <div className='cart__view'>
             <img src={product.image} alt="" />
+
+            <div className='cart__qty'>
+            <h4>{product.product}</h4>
+            <br/>
+            <p>{product.quantity}</p>
+
+            </div>
+
+            <div className='cart__btn'>
+
             <button className='btn' onClick={()=>removeProduct(product.id.id)}>X</button>
+            </div>
+
           </div>
 
         </React.Fragment>

@@ -1,6 +1,5 @@
 import { Item } from '../Item'
 import '../../index.css'
-// import '../styles/Header.css'
 
 const ItemList = ({ item = [] }) => {
 
