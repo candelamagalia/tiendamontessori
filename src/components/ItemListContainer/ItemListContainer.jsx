@@ -1,5 +1,4 @@
 import React from 'react'
-// import '../styles/Header.css'
 import {ItemList} from '../ItemList'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'

@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-// import Swal from 'sweetalert2'
 import '../../index.css'
 
 export const ItemCount = ({initial, stock, onAdd}) => {

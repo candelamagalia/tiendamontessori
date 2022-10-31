@@ -1,15 +1,10 @@
 import React from "react";
 import { useCartContext } from "../../context/CartContext";
 import { db } from '../../firebase/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore';
 import { useState } from "react";
 import Swal from 'sweetalert2'
 import '../../index.css'
-
-
-
-
-
 
 
 export const Form = () => {
@@ -36,7 +31,8 @@ export const Form = () => {
             })
             .then((res) => {
                 setSaleId(res.id)
-                console.log(res.id)        
+                carrito.forEach(products => {
+                    updateStock(products)})        
             });
             Swal.fire(
                 'Datos ingresados correctamente',
@@ -61,6 +57,11 @@ export const Form = () => {
             ...dataClient, [inpt.name] : inpt.value
         })
     }
+
+    const updateStock = (products) => {
+        const updStk = doc(db, "products", products.id.id)
+        updateDoc(updStk, {stock:(products.stock - products.quantity)})
+    }
     
 
 
@@ -72,13 +73,19 @@ export const Form = () => {
         <div className="item-list-container">
                 <h1 className="greeting">Completa tus datos para finalizar la compra</h1>
             <div>
+                <div className="compra__final">
+                <h3>Estás comprando:</h3>
                     {carrito.map((product) => 
-        <div key={product.id.id} name="items">
-                    <p>{product.product}</p>
-                    <p>{product.quantity}</p>
-                    <p>${totalPrice()}</p>
+        <div key={product.id.id} name="cart__view">
+            <ul>
+                <li><p>{product.product}</p></li>
+            </ul>
+                    
         </div>
                     )}
+
+                    <p>Total: <b>${totalPrice()}</b></p>
+                </div>
 
                     <div className="div__form">
 
