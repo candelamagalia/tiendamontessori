@@ -1,7 +1,6 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import '../../index.css';
-import { NavLink } from 'react-router-dom';
 import { useCartContext } from '../../context/CartContext';
 
 

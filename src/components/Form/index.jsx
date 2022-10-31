@@ -5,6 +5,7 @@ import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/fi
 import { useState } from "react";
 import Swal from 'sweetalert2'
 import '../../index.css'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 
 export const Form = () => {
@@ -38,14 +39,17 @@ export const Form = () => {
                 'Datos ingresados correctamente',
                 'No te olvides de anotar tu ID de compra',
                 'success'
-              );
+              );setTimeout(()=>{
+                    clearCart();    
+                },3000);
             }else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oh no',
                     text: 'Faltan ingresar datos',
-                  });
-        }
+                  })
+                  
+        } 
     }
 
     const clientChange = (e) => {
@@ -106,7 +110,15 @@ export const Form = () => {
          <div className="gracias">
             <h3>Gracias por tu compra!</h3>
             <p>Acá debajo podes ver tu ID de compra. Guardalo para coordinar la entrega!</p>
-            <p>Tu ID de compra es <b>{saleId}</b> </p>
+            <p>Tu ID de compra es <b>{saleId}</b> 
+                </p>
+
+                <CopyToClipboard text={saleId}>
+                    <button className="btn">Copiar Id</button>
+                
+                </CopyToClipboard>
+                
+
          </div>
 
             
